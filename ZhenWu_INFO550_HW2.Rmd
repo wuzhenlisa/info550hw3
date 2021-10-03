@@ -18,7 +18,7 @@ library(ggplot2)
 # knitr::kable(summary(breastcancer))
 ```
 ```{r}
-breastcancer <- read.csv("../breast_cancer.csv")
+breastcancer <- read.csv("/mnt/e/Emory_study/Info550/breast_cancer.csv")
 ```
 The data did not have some missing values and thus I did not do any data cleaning. 
 
