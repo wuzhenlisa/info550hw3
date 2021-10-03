@@ -1,5 +1,5 @@
 # Info-550
-For my project, I use the data from kaggle, the link is https://www.kaggle.com/uciml/breast-cancer-wisconsin-data. You need to install the dataset at first and change the data address in the subline,
+For my project, I use the data from kaggle, the link is https://www.kaggle.com/uciml/breast-cancer-wisconsin-data. You can download the dataset from kaggle website or from my repo at first and change the data address in the subline,
 ```{r}
 breastcancer <- read.csv("/mnt/e/Emory_study/Info550/breast_cancer.csv")
 ```
