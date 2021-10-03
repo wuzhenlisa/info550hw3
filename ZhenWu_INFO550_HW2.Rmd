@@ -1,0 +1,46 @@
+---
+title: "INFO550_HW2"
+author: "Zhen_Wu"
+date: "`r format(Sys.time(), format='%m/%d/%Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r,include=F}
+library(readr)
+library(table1)
+library(ggplot2)
+# library(knitr)
+# knitr::kable(summary(breastcancer))
+```
+```{r}
+breastcancer <- read.csv("../breast_cancer.csv")
+```
+The data did not have some missing values and thus I did not do any data cleaning. 
+
+```{r}
+table1(~radius_mean+texture_mean+perimeter_mean+area_mean+smoothness_mean+compactness_mean+concavity_mean+concave_points_mean+symmetry_mean+fractal_dimension_mean|diagnosis,data=breastcancer)
+```
+
+```{r}
+breastcancer.b<-breastcancer[breastcancer$diagnosis=="B",]
+breastcancer.m<-breastcancer[breastcancer$diagnosis=="M",]
+t.test(breastcancer.b$radius_mean,breastcancer.m$radius_mean)
+t.test(breastcancer.b$perimeter_mean,breastcancer.m$perimeter_mean)
+```
+569 subjects included in the study. 357 subjects were diagnosed as benign breast cancer while 212 subjects were diagnosed as malignant breast cancer. 
+The radius mean of breast cancer among all subjects was `r round(mean(breastcancer$radius_mean),2)`. The perimeter_mean of breast cancer among all subjects was `r round(mean(breastcancer$perimeter_mean),2)`.The texture mean of breast cancer among subjects was `r round(mean(breastcancer$texture_mean),2)`.The area mean of breast cancer among subjects was `r round(mean(breastcancer$area_mean),2)`.
+The radius mean and perimeter mean of breast cancer among benign group were statistically smaller than that among malignant group. It showed that radius and perimeter of breast cancer were two characteristics of malignant breast cancer.
+
+```{r}
+# For all subjects
+ggplot(data = breastcancer,aes(x=concavity_mean,y=compactness_mean)) +  geom_point() + ggtitle("The correlation between concavity mean and compactness mean")+   theme_bw(base_size=14)
+# Grouped by beningn and malignant groups
+ggplot(data = breastcancer,aes(x=concavity_mean,y=compactness_mean, color=diagnosis)) +  geom_point() + ggtitle("The correlation between concavity mean and compactness mean grouped by diagnosis results")+   theme_bw(base_size=10) +   facet_wrap(~ diagnosis)
+```
+The figure showed that compactness had positive correlation with concavity among all subjects. Among benign breast cancer group, concavity mean and compactness mean almost aggregated within 0.2. Among malignant breast cancer group, concavity mean had positive correlation with concavity and spreaded from 0.1 to 0.5. It showed that patients with malignant breast cancer usally had higher compactness and concavity compared to patients with benign breast cancer. When their compactness became higher, their concavity also became higher. 
+
